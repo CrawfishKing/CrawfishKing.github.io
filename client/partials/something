@@ -1,0 +1,9 @@
+description "Gunicorn application server handling Secret_Santa"
+start on runlevel [2345]
+stop on runlevel [!2345]
+respawn
+setuid ubuntu
+setgid www-data
+chdir /home/ubuntu/Secret_Santa
+# the next command is one line, our platform pushed it down to the next line (don't write this comment)
+exec Secret_Santa_env/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/Secret_Santa/Secret_Santa.sock Secret_Santa.wsgi:application
